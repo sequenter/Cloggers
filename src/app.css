@@ -1,0 +1,80 @@
+@import 'tailwindcss';
+@import './assets/sprite/sprite.css';
+
+@layer base {
+  @font-face {
+    font-family: 'runescape';
+    src: url('./assets/font/runescape.ttf');
+  }
+
+  /* disable chrome cancel button */
+  input[type='search']::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  button,
+  [role='button'] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [role='button']:disabled {
+    cursor: default;
+  }
+
+  ::-webkit-scrollbar {
+    width: 25px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-image: linear-gradient(90deg, rgba(37, 32, 25, 1) 0%, rgba(61, 52, 38, 1) 80%);
+    border-radius: 0px;
+    border: 2px solid black;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(90deg, rgba(129, 112, 81, 1) 0%, rgba(75, 65, 49, 1) 80%);
+    border-radius: 6px;
+    border: 2px solid black;
+  }
+
+  /* Up */
+  ::-webkit-scrollbar-button:single-button:vertical:decrement {
+    background-image:
+      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-up-thick</title><path d="M14,20H10V11L6.5,14.5L4.08,12.08L12,4.16L19.92,12.08L17.5,14.5L14,11V20Z" /></svg>'),
+      linear-gradient(90deg, rgba(129, 112, 81, 1) 0%, rgba(75, 65, 49, 1) 80%);
+    height: 25px;
+    width: 25px;
+    border: 2px solid black;
+  }
+
+  /* Down */
+  ::-webkit-scrollbar-button:single-button:vertical:increment {
+    background-image:
+      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-down-thick</title><path d="M10,4H14V13L17.5,9.5L19.92,11.92L12,19.84L4.08,11.92L6.5,9.5L10,13V4Z" /></svg>'),
+      linear-gradient(90deg, rgba(129, 112, 81, 1) 0%, rgba(75, 65, 49, 1) 80%);
+    height: 25px;
+    width: 25px;
+    border: 2px solid black;
+  }
+}
+
+@theme {
+  --color-background: #2b2620;
+  --color-selected: #70695f;
+
+  --color-primary-50: #564c42;
+  --color-primary-100: #493f35;
+  --color-primary-200: #3e3529;
+  --color-primary-300: #28251e;
+
+  --color-grey-50: #535451;
+  --color-grey-100: #30302d;
+
+  --color-green: #00c600;
+  --color-orange: #ff9300;
+  --color-yellow: #feff00;
+  --color-red: #fe0000;
+
+  --text-shadow-runescape: 2px 2px 0 #000;
+}

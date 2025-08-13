@@ -9,6 +9,9 @@ interface FetchState<T> {
 export const fetchStore = <T>(callback: () => Promise<FetchResponse<T>>): FetchState<T> => {
   let store: FetchState<T> = $state({ data: undefined, error: undefined, isLoading: false });
 
+  /**
+   * Fetch data via the provided callback and update store states accordingly.
+   */
   const fetch = async () => {
     // Update store loading
     store = { ...store, isLoading: true };

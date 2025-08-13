@@ -24,8 +24,8 @@
             <CollectionItem
               scale="scale-100"
               size="w-9 h-9"
-              total={players.length}
               {item}
+              {players}
             />
           </div>
         {/each}

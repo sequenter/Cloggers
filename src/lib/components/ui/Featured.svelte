@@ -19,6 +19,6 @@
 
   <FeaturedItems
     title="least collected items"
-    items={collectedItems.slice(collectedItemMap.length - 1 - MAX_FEATURED_ITEMS).reverse()}
+    items={collectedItems.slice(collectedItemMap.length - 1 - MAX_FEATURED_ITEMS)}
   />
 </div>

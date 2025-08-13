@@ -1,7 +1,16 @@
 <script lang="ts">
+  import { page } from '$app/state';
+
   import '../app.css';
 
   import { CollectionLog, Featured, Footer, Header, Rankings } from '$lib/components';
+  import { searchStore } from '$lib/stores/search.store.svelte';
+
+  const { setGroupId } = $derived(searchStore);
+
+  $effect(() => {
+    setGroupId(page.url.searchParams.get('group') || '');
+  });
 </script>
 
 <div class="flex flex-col gap-4 min-h-screen">

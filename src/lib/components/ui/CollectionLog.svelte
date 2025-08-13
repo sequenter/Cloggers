@@ -39,12 +39,10 @@
     selectedCategory = category;
   };
 
-  const getCollectedItemCount = (category: Categories, item: string) =>
-    collectedItems[category] && collectedItems[category][item] ? collectedItems[category][item].length : 0;
+  const getCollectedItemPlayers = (category: Categories, item: string) =>
+    collectedItems[category] && collectedItems[category][item] ? collectedItems[category][item] : [];
 
   const isGreenLog = (category: Categories) => Object.keys(collectedItems[category] || []).length === CATEGORIES[category].items.length;
-
-  const isItemCollected = (category: Categories, item: string) => collectedItems[category] && collectedItems[category][item];
 </script>
 
 <div class="flex flex-col gap-2 p-2 border-2 border-black bg-grey-100">
@@ -100,7 +98,7 @@
           {#each categoryItems as categoryItem (categoryItem)}
             <CollectionItem
               item={categoryItem}
-              total={getCollectedItemCount(selectedCategory, categoryItem)}
+              players={getCollectedItemPlayers(selectedCategory, categoryItem)}
             />
           {/each}
         </div>

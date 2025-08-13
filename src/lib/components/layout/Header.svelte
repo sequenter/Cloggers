@@ -7,9 +7,9 @@
   import { CollectionsIcon, GnomeIcon, Spinner, searchIcon } from '$lib/util/icon';
 
   const { data, error, isLoading } = $derived(collectionsFetchStore);
-  let { setGroupId } = $derived(searchStore);
+  let { groupId, setGroupId } = $derived(searchStore);
 
-  let inputGroupId = $state('');
+  let inputGroupId = $derived(groupId);
 
   const onSearch = () => {
     setGroupId(inputGroupId);

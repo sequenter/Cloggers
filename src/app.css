@@ -23,22 +23,43 @@
   }
 
   ::-webkit-scrollbar {
+    height: 25px;
     width: 25px;
   }
 
-  ::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track:horizontal {
+    background-image: linear-gradient(0deg, rgba(37, 32, 25, 1) 0%, rgba(61, 52, 38, 1) 80%);
+    border-radius: 0px;
+    border: 2px solid black;
+  }
+
+  ::-webkit-scrollbar-track:vertical {
     background-image: linear-gradient(90deg, rgba(37, 32, 25, 1) 0%, rgba(61, 52, 38, 1) 80%);
     border-radius: 0px;
     border: 2px solid black;
   }
 
-  ::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb:horizontal {
+    background-image: linear-gradient(180deg, rgba(129, 112, 81, 1) 0%, rgba(75, 65, 49, 1) 80%);
+    border-radius: 6px;
+    border: 2px solid black;
+  }
+
+  ::-webkit-scrollbar-thumb:vertical {
     background-image: linear-gradient(90deg, rgba(129, 112, 81, 1) 0%, rgba(75, 65, 49, 1) 80%);
     border-radius: 6px;
     border: 2px solid black;
   }
 
-  /* Up */
+  ::-webkit-scrollbar-button:single-button:horizontal:decrement {
+    background-image:
+      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-left-thick</title><path d="M20,10V14H11L14.5,17.5L12.08,19.92L4.16,12L12.08,4.08L14.5,6.5L11,10H20Z" /></svg>'),
+      linear-gradient(180deg, rgba(129, 112, 81, 1) 0%, rgba(75, 65, 49, 1) 80%);
+    height: 25px;
+    width: 25px;
+    border: 2px solid black;
+  }
+
   ::-webkit-scrollbar-button:single-button:vertical:decrement {
     background-image:
       url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-up-thick</title><path d="M14,20H10V11L6.5,14.5L4.08,12.08L12,4.16L19.92,12.08L17.5,14.5L14,11V20Z" /></svg>'),
@@ -48,7 +69,15 @@
     border: 2px solid black;
   }
 
-  /* Down */
+  ::-webkit-scrollbar-button:single-button:horizontal:increment {
+    background-image:
+      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-right-thick</title><path d="M4,10V14H13L9.5,17.5L11.92,19.92L19.84,12L11.92,4.08L9.5,6.5L13,10H4Z" /></svg>'),
+      linear-gradient(180deg, rgba(129, 112, 81, 1) 0%, rgba(75, 65, 49, 1) 80%);
+    height: 25px;
+    width: 25px;
+    border: 2px solid black;
+  }
+
   ::-webkit-scrollbar-button:single-button:vertical:increment {
     background-image:
       url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-down-thick</title><path d="M10,4H14V13L17.5,9.5L19.92,11.92L12,19.84L4.08,11.92L6.5,9.5L10,13V4Z" /></svg>'),

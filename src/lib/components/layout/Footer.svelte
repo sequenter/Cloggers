@@ -2,7 +2,7 @@
 
 <div class="pt-2 border-t-2 border-black bg-grey-100">
   <div class="py-4 border-t-2 border-grey-50 bg-primary-100">
-    <div class="flex justify-between gap-8 container mx-auto">
+    <div class="flex justify-between gap-8 container mx-auto px-2">
       <span class="text-md text-white"
         >Made possible by <a
           class="underline text-orange"

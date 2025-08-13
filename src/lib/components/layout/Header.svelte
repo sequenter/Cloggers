@@ -16,7 +16,7 @@
 
 <div class="pb-2 border-b-2 border-black bg-grey-100">
   <div class="py-4 border-b-2 border-grey-50 bg-primary-100">
-    <div class="flex gap-8 container mx-auto">
+    <div class="flex gap-8 container mx-auto px-2">
       <div class="flex gap-2 items-center">
         <img
           class="h-8 w-8"

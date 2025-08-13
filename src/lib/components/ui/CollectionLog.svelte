@@ -4,9 +4,12 @@
   import CollectionItem from './CollectionItem.svelte';
 
   import { collectionsFetchStore } from '$lib/stores/collections.store.svelte';
+  import { searchStore } from '$lib/stores/search.store.svelte';
   import type { Categories, MainCategories } from '$lib/types';
   import { CATEGORIES, ITEMS, MAIN_CATEGORIES } from '$lib/util/constants';
   import { collectedCategoryItemsMap } from '$lib/util/mapping';
+
+  const { selectedPlayers } = $derived(searchStore);
 
   /* Selected tab and category states */
   const tabs = Object.keys(MAIN_CATEGORIES) as Array<MainCategories>;
@@ -20,28 +23,45 @@
   /* Derived API data states */
   const { data } = $derived(collectionsFetchStore);
 
+  // Collated collected items across members
+  const collectedItems = $derived(data ? collectedCategoryItemsMap(data, selectedPlayers) : {});
+
   // Total unique items across members
   const totalCollectedItems = $derived(
-    data ? [...new Set(data.members.reduce((acc, { items }) => [...acc, ...items], [] as Array<number>))].length : 0
+    [...new Set(Object.values(collectedItems).reduce((acc, items) => [...acc, ...Object.keys(items)], [] as Array<string>))].length
   );
-
-  // Collated collected items across members
-  const collectedItems = $derived(data ? collectedCategoryItemsMap(data) : {});
 
   // Selected category collected items
   const totalCollectedCategoryItems = $derived(Object.keys(collectedItems[selectedCategory] || []).length);
 
+  /**
+   * On main collection tab selected.
+   * @param {MainCategories} tab Selected tab
+   */
   const onTabSelected = (tab: MainCategories) => {
     selectedTab = tab;
   };
 
+  /**
+   * On collection category selected.
+   * @param {Categories} category selected category
+   */
   const onCategorySelected = (category: Categories) => {
     selectedCategory = category;
   };
 
+  /**
+   * Get players that have collected a given item by category.
+   * @param {Categories} category Item category
+   * @param {string} item Item to obtain collectors for
+   */
   const getCollectedItemPlayers = (category: Categories, item: string) =>
     collectedItems[category] && collectedItems[category][item] ? collectedItems[category][item] : [];
 
+  /**
+   * Whether or not a given category has been green logged by group members.
+   * @param {Categories} category Category to determine
+   */
   const isGreenLog = (category: Categories) => Object.keys(collectedItems[category] || []).length === CATEGORIES[category].items.length;
 </script>
 

@@ -20,8 +20,6 @@
     isOpen = true;
     item = itemId;
     players = playersCollected;
-
-    console.log(playersCollected);
   };
 </script>
 

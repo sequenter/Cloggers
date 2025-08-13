@@ -2,6 +2,9 @@
   import { clsx } from 'clsx';
 
   import { collectionsFetchStore } from '$lib/stores/collections.store.svelte';
+  import { searchStore } from '$lib/stores/search.store.svelte';
+
+  const { selectedPlayers, toggleSelectedPlayer } = $derived(searchStore);
 
   /* Derived API data states */
   const { data } = $derived(collectionsFetchStore);
@@ -24,7 +27,13 @@
   <div class="flex p-2 border-2 gap-2 overflow-x-scroll overflow-y-hidden whitespace-nowrap border-grey-50 bg-primary-100">
     {#if ranking.length}
       {#each ranking as { player, itemTotal }, i (player)}
-        <div class="flex items-center min-w-48 border-2 border-grey-50 bg-primary-300">
+        <button
+          class={clsx(
+            'flex items-center min-w-48 border-2 border-grey-50',
+            selectedPlayers.includes(player) ? 'bg-selected' : 'bg-primary-300'
+          )}
+          onclick={() => toggleSelectedPlayer(player)}
+        >
           {#if i < 3}
             <span
               class={clsx(
@@ -40,7 +49,7 @@
             <span class="text-xl">{`${i > 2 ? `${i + 1}.` : ''} ${player}`}</span>
             <span class="text-xl">{itemTotal}</span>
           </div>
-        </div>
+        </button>
       {/each}
     {:else}
       <div class="flex items-center justify-center w-full"><span class="text-lg">Search for a group to view rankings</span></div>

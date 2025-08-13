@@ -23,7 +23,7 @@
   onclick={() => dialog.open(item, players)}
 >
   {#if players.length > 0}
-    <span class="absolute text-lg z-10 top-0 left-0 text-yellow">{players.length}</span>
+    <span class="absolute text-lg z-10 top-0 left-0 text-shadow-runescape text-yellow">{players.length}</span>
   {/if}
 
   <div class={clsx(`sprite-icon id_${item}`, scale, players.length === 0 && 'opacity-50')}></div>

@@ -30,26 +30,28 @@ const ITEM_MAP = getItemCategoryMap();
  * Collates collected items across members of a group into categories.
  * @param {GroupCollections} data API group data
  */
-export const collectedCategoryItemsMap = (data: GroupCollections) => {
+export const collectedCategoryItemsMap = (data: GroupCollections, players: Array<string> = []) => {
   const collectedMap: Partial<Record<Categories, Record<string, Array<string>>>> = {};
 
-  data.members.forEach(({ items, player }) => {
-    items.forEach((item) => {
-      const categories = ITEM_MAP[item];
+  data.members.forEach(({ items, player_name_with_capitalization }) => {
+    if (!players.length || players.includes(player_name_with_capitalization)) {
+      items.forEach((item) => {
+        const categories = ITEM_MAP[item];
 
-      categories.forEach((category) => {
-        // Append a member to the item within a category of the collected map, signifying that the member has collected the item
-        if (collectedMap[category]) {
-          if (collectedMap[category][item]) {
-            collectedMap[category][item] = [...collectedMap[category][item], player];
+        categories.forEach((category) => {
+          // Append a member to the item within a category of the collected map, signifying that the member has collected the item
+          if (collectedMap[category]) {
+            if (collectedMap[category][item]) {
+              collectedMap[category][item] = [...collectedMap[category][item], player_name_with_capitalization];
+            } else {
+              collectedMap[category][item] = [player_name_with_capitalization];
+            }
           } else {
-            collectedMap[category][item] = [player];
+            collectedMap[category] = { [item]: [player_name_with_capitalization] };
           }
-        } else {
-          collectedMap[category] = { [item]: [player] };
-        }
+        });
       });
-    });
+    }
   });
 
   return collectedMap;
@@ -59,20 +61,22 @@ export const collectedCategoryItemsMap = (data: GroupCollections) => {
  * Collates collected items across members of a group and sorts by completion count.
  * @param {GroupCollections} data API group data
  */
-export const collectedItemMap = (data: GroupCollections) => {
+export const collectedItemMap = (data: GroupCollections, players: Array<string> = []) => {
   const collectedMap: Record<string, Array<string>> = {};
 
-  data.members.forEach(({ player, items }) => {
-    items.forEach((item) => {
-      if (collectedMap[item]) {
-        collectedMap[item] = [...collectedMap[item], player];
-      } else {
-        collectedMap[item] = [player];
-      }
-    });
+  data.members.forEach(({ items, player_name_with_capitalization }) => {
+    if (!players.length || players.includes(player_name_with_capitalization)) {
+      items.forEach((item) => {
+        if (collectedMap[item]) {
+          collectedMap[item] = [...collectedMap[item], player_name_with_capitalization];
+        } else {
+          collectedMap[item] = [player_name_with_capitalization];
+        }
+      });
+    }
   });
 
   return Object.entries(collectedMap)
-    .map(([item, players]) => ({ item, players }))
+    .map(([item, playersCollected]) => ({ item, players: playersCollected }))
     .sort((a, b) => b.players.length - a.players.length || ITEMS[a.item].localeCompare(ITEMS[b.item]));
 };

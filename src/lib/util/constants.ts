@@ -425,7 +425,7 @@ export const CATEGORIES = {
     }
 };
 
-export const ITEMS = {
+export const ITEMS: Record<string, string> = {
     '1249': 'Dragon spear',
     '2366': 'Shield left half',
     '2577': 'Ranger boots',

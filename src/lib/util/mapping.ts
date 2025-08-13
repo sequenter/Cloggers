@@ -1,4 +1,4 @@
-import { CATEGORIES } from './constants';
+import { CATEGORIES, ITEMS } from './constants';
 
 import type { Categories, GroupCollections } from '$lib/types';
 
@@ -27,10 +27,10 @@ const getItemCategoryMap = (): Record<string, Array<Categories>> => {
 const ITEM_MAP = getItemCategoryMap();
 
 /**
- * Collates collected items across members of a group.
+ * Collates collected items across members of a group into categories.
  * @param {GroupCollections} data API group data
  */
-export const collectedItemsMap = (data: GroupCollections) => {
+export const collectedCategoryItemsMap = (data: GroupCollections) => {
   const collectedMap: Partial<Record<Categories, Record<string, Array<string>>>> = {};
 
   data.members.forEach(({ items, player }) => {
@@ -53,4 +53,26 @@ export const collectedItemsMap = (data: GroupCollections) => {
   });
 
   return collectedMap;
+};
+
+/**
+ * Collates collected items across members of a group and sorts by completion count.
+ * @param {GroupCollections} data API group data
+ */
+export const collectedItemMap = (data: GroupCollections) => {
+  const collectedMap: Record<string, Array<string>> = {};
+
+  data.members.forEach(({ player, items }) => {
+    items.forEach((item) => {
+      if (collectedMap[item]) {
+        collectedMap[item] = [...collectedMap[item], player];
+      } else {
+        collectedMap[item] = [player];
+      }
+    });
+  });
+
+  return Object.entries(collectedMap)
+    .map(([item, players]) => ({ item, players }))
+    .sort((a, b) => b.players.length - a.players.length || ITEMS[a.item].localeCompare(ITEMS[b.item]));
 };

@@ -33,6 +33,11 @@ export interface GroupCollections {
   total_categories_available: number;
 }
 
+export interface CollectedItem {
+  item: string;
+  players: Array<string>;
+}
+
 /* Fetch */
 
 export interface FetchResponse<T> {

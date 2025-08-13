@@ -1,5 +1,6 @@
 export { default as AchievementsIcon } from '$assets/icon/achievements.png';
 export { default as CollectionsIcon } from '$assets/icon/collections.png';
+export { default as GnomeIcon } from '$assets/icon/gnome.png';
 export { default as Spinner } from '$assets/icon/spinner.gif';
 
 /* SVG path data */

@@ -1,10 +1,12 @@
 <script lang="ts">
   import clsx from 'clsx';
 
+  import CollectionItem from './CollectionItem.svelte';
+
   import { collectionsFetchStore } from '$lib/stores/collections.store.svelte';
   import type { Categories, MainCategories } from '$lib/types';
   import { CATEGORIES, ITEMS, MAIN_CATEGORIES } from '$lib/util/constants';
-  import { collectedItemsMap } from '$lib/util/mapping';
+  import { collectedCategoryItemsMap } from '$lib/util/mapping';
 
   /* Selected tab and category states */
   const tabs = Object.keys(MAIN_CATEGORIES) as Array<MainCategories>;
@@ -24,7 +26,7 @@
   );
 
   // Collated collected items across members
-  const collectedItems = $derived(data ? collectedItemsMap(data) : {});
+  const collectedItems = $derived(data ? collectedCategoryItemsMap(data) : {});
 
   // Selected category collected items
   const totalCollectedCategoryItems = $derived(Object.keys(collectedItems[selectedCategory] || []).length);
@@ -96,16 +98,10 @@
 
         <div class="flex flex-wrap gap-4 content-start px-4 py-2 grow overflow-x-hidden overflow-y-scroll">
           {#each categoryItems as categoryItem (categoryItem)}
-            {@const collectedItemCount = getCollectedItemCount(selectedCategory, categoryItem)}
-            <div class="relative flex justify-center items-center w-18 h-18">
-              {#if collectedItemCount > 0}
-                <span class="absolute text-lg z-10 top-0 left-0 text-yellow">{getCollectedItemCount(selectedCategory, categoryItem)}</span>
-              {/if}
-
-              <div
-                class={clsx(`sprite-icon id_${categoryItem} scale-200`, !isItemCollected(selectedCategory, categoryItem) && 'opacity-50')}
-              ></div>
-            </div>
+            <CollectionItem
+              item={categoryItem}
+              total={getCollectedItemCount(selectedCategory, categoryItem)}
+            />
           {/each}
         </div>
       </div>

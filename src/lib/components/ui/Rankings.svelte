@@ -17,14 +17,14 @@
 </script>
 
 <div class="flex flex-col gap-2 p-2 border-2 border-black bg-grey-100">
-  <div class="flex justify-center py-2 border-2 border-grey-50 bg-primary-100">
+  <div class="flex items-center justify-center gap-4 py-2 border-2 border-grey-50 bg-primary-100">
     <span class="font-bold text-2xl">Group Rankings</span>
   </div>
 
   <div class="flex p-2 border-2 gap-2 overflow-x-scroll overflow-y-hidden whitespace-nowrap border-grey-50 bg-primary-100">
     {#if ranking.length}
       {#each ranking as { player, itemTotal }, i (player)}
-        <div class="flex items-center border-2 border-grey-50 bg-primary-300">
+        <div class="flex items-center min-w-48 border-2 border-grey-50 bg-primary-300">
           {#if i < 3}
             <span
               class={clsx(
@@ -36,7 +36,10 @@
             >
           {/if}
 
-          <span class="text-xl px-2">{`${i > 2 ? `${i + 1}.` : ''} ${player}, ${itemTotal}`}</span>
+          <div class="flex items-center justify-between px-2 w-full">
+            <span class="text-xl">{`${i > 2 ? `${i + 1}.` : ''} ${player}`}</span>
+            <span class="text-xl">{itemTotal}</span>
+          </div>
         </div>
       {/each}
     {:else}

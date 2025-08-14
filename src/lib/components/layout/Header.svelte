@@ -5,7 +5,7 @@
   import { collectionsFetchStore } from '$lib/stores/collections.store.svelte';
   import { groupFetchStore } from '$lib/stores/group.store.svelte';
   import { searchStore } from '$lib/stores/search.store.svelte';
-  import { CollectionsIcon, GnomeIcon, Spinner, searchIcon } from '$lib/util/icon';
+  import { collectionsIcon, gnomeIcon, searchIcon, spinnerIcon } from '$lib/util/icon';
   import { playerDetailMap, unsyncedPlayerMap } from '$lib/util/mapping';
 
   const { data, error, isLoading } = $derived(collectionsFetchStore);
@@ -30,7 +30,7 @@
           <img
             class="h-8 w-8"
             alt="collections icon"
-            src={CollectionsIcon}
+            src={collectionsIcon}
           />
 
           <span class="text-2xl">Cloggers</span>
@@ -53,7 +53,7 @@
               <img
                 class="w-4 h-4"
                 alt="..."
-                src={Spinner}
+                src={spinnerIcon}
               />
             {:else}
               <button
@@ -98,7 +98,7 @@
               <img
                 class="w-4 h-4"
                 alt="Members"
-                src={GnomeIcon}
+                src={gnomeIcon}
               />
             </button>
           {/if}

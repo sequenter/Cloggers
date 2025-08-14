@@ -11,6 +11,16 @@ const createSearchStore = () => {
   };
 
   /**
+   * Updates selected players.
+   * @param {Array<string>} value Selected players
+   */
+  const setSelectedPlayers = (value: Array<string>) => {
+    console.log(value);
+
+    selectedPlayers = value;
+  };
+
+  /**
    * Appends or removed a player depending if the player already exists within the selected players.
    * @param {string} value Player to toggle
    */
@@ -20,6 +30,13 @@ const createSearchStore = () => {
       : [...selectedPlayers, value];
   };
 
+  /**
+   * Reset selected players.
+   */
+  const resetSelectedPlayers = () => {
+    selectedPlayers = [];
+  };
+
   return {
     get groupId() {
       return groupId;
@@ -27,8 +44,14 @@ const createSearchStore = () => {
     get selectedPlayers() {
       return selectedPlayers;
     },
+    get resetSelectedPlayers() {
+      return resetSelectedPlayers;
+    },
     get setGroupId() {
       return setGroupId;
+    },
+    get setSelectedPlayers() {
+      return setSelectedPlayers;
     },
     get toggleSelectedPlayer() {
       return toggleSelectedPlayer;

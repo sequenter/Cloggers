@@ -48,7 +48,7 @@ export interface GroupCollections {
 
 // There's more data available from the API, but we only want 'game_mode' for now
 interface StatsMember {
-  game_mode: string;
+  game_mode: number;
   player: string;
   player_name_with_capitalization: string;
 }

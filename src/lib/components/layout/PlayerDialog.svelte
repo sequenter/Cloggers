@@ -4,7 +4,7 @@
   import { Dialog, Icon } from '$lib/components';
   import type { PlayerDetail } from '$lib/types';
   import { ITEMS } from '$lib/util/constants';
-  import { GnomeIcon, arrowLeftIcon, searchIcon } from '$lib/util/icon';
+  import { arrowLeftIcon, gnomeIcon, searchIcon } from '$lib/util/icon';
 
   let players: Record<string, PlayerDetail> = $state({});
   let unsyncedPlayers: Array<string> = $state([]);
@@ -34,7 +34,7 @@
   <img
     class="w-6 h-6"
     alt="Members"
-    src={GnomeIcon}
+    src={gnomeIcon}
   />
 {/snippet}
 
@@ -119,7 +119,7 @@
       {#if unsyncedPlayers.length}
         <details class="open:[&>summary]:border-b-2">
           <summary class="text-xl px-2 cursor-pointer border-t-2 border-grey-50 bg-primary-300 text-white"
-            >{`Unsynced Members (${unsyncedPlayers.length})`}</summary
+            >{`Unsynced members (${unsyncedPlayers.length})`}</summary
           >
           <ul class="text-xl w-full">
             {#each unsyncedPlayers.sort((a, b) => a.localeCompare(b)) as unsyncedPlayer, i (unsyncedPlayer)}

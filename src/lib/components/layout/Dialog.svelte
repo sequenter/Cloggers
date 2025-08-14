@@ -55,7 +55,9 @@
             <button
               class="flex items-center justify-center w-6 h-6 border-2 border-black bg-linear-to-r from-button-start-stop to-button-end-stop"
               aria-label="close"
-              onclick={() => (isOpen = false)}
+              onclick={() => {
+                isOpen = false;
+              }}
             >
               <Icon
                 class="w-6 h-6 text-black"

@@ -1,19 +1,18 @@
 <script lang="ts">
   import { clsx } from 'clsx';
 
+  import { Icon } from '$lib/components';
   import { collectionsFetchStore } from '$lib/stores/collections.store.svelte';
   import { groupFetchStore } from '$lib/stores/group.store.svelte';
   import { searchStore } from '$lib/stores/search.store.svelte';
+  import { closeIcon, ironmanIcon } from '$lib/util/icon';
+  import { gameModePlayerMap } from '$lib/util/mapping';
 
-  const { selectedPlayers, toggleSelectedPlayer } = $derived(searchStore);
+  const { selectedPlayers, resetSelectedPlayers, setSelectedPlayers, toggleSelectedPlayer } = $derived(searchStore);
 
   /* Derived API data states */
   const { data } = $derived(collectionsFetchStore);
   const { data: groupStatsData } = $derived(groupFetchStore);
-
-  $effect(() => {
-    console.log(groupStatsData);
-  });
 
   // Rank members by collections logged
   const ranking = $derived(
@@ -23,11 +22,53 @@
           .sort((a, b) => b.itemTotal - a.itemTotal)
       : []
   );
+
+  // All group members
+  const members = $derived(data ? data.members.map(({ player_name_with_capitalization }) => player_name_with_capitalization) : []);
 </script>
 
 <div class="flex flex-col gap-2 p-2 border-2 border-black bg-grey-100">
-  <div class="flex items-center justify-center gap-4 py-2 border-2 border-grey-50 bg-primary-100">
+  <div class="relative flex items-center justify-center gap-4 p-2 border-2 border-grey-50 bg-primary-100">
     <span class="font-bold text-2xl">Group Rankings</span>
+
+    {#if groupStatsData}
+      <button
+        class="absolute left-2 flex items-center justify-center w-6 h-6 border-2 border-black bg-linear-to-r from-button-start-stop to-button-end-stop"
+        title="Filter by ironman members"
+        onclick={() => {
+          setSelectedPlayers(
+            Object.entries(gameModePlayerMap(groupStatsData)).reduce(
+              (acc, [player, mode]) => (mode > 0 && members.includes(player) ? [...acc, player] : acc),
+              [] as Array<string>
+            )
+          );
+        }}
+      >
+        <img
+          class="w-4 h-4 text-black"
+          alt="Ironman"
+          src={ironmanIcon}
+        />
+      </button>
+    {/if}
+
+    <div class="absolute right-2 flex items-center gap-2">
+      {#if selectedPlayers.length}
+        <span class="invisible sm:visible">{`Filtering ${selectedPlayers.length} member${selectedPlayers.length === 1 ? '' : 's'}`}</span>
+
+        <button
+          class="flex items-center justify-center w-6 h-6 border-2 border-black bg-linear-to-r from-button-start-stop to-button-end-stop"
+          title="Clear filter"
+          onclick={() => resetSelectedPlayers()}
+        >
+          <Icon
+            class="w-6 h-6 text-black"
+            title="close"
+            path={closeIcon}
+          />
+        </button>
+      {/if}
+    </div>
   </div>
 
   <div class="flex p-2 border-2 gap-2 overflow-x-scroll overflow-y-hidden whitespace-nowrap border-grey-50 bg-primary-100">

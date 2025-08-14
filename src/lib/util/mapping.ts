@@ -2,6 +2,8 @@ import { CATEGORIES, ITEMS } from './constants';
 
 import type { Categories, GroupCollections, GroupMemberStats, PlayerDetail } from '$lib/types';
 
+/* TODO: These mapping utilities should probably be dropped into the relevant stores so that they only need to be processed once */
+
 /**
  * Reduces the {@link CATEGORIES} to a key/value pair of item/category, so that the category corresponding to an item can be easily found.
  * @returns {Record<string, Array<Categories>>} item/category key/value pair
@@ -104,15 +106,27 @@ export const playerDetailMap = (data: GroupCollections) => {
 };
 
 /**
- * Created a map of unsynced players. These are members of a group which are not included in the group collection log due to their
+ * Creates a map of unsynced players. These are members of a group which are not included in the group collection log due to their
  * collection logs not being synced.
  * @param {Array<string>} groupMembers Synced group members
  * @param {GroupMemberStats} data API group member stats data
  */
 export const unsyncedPlayerMap = (groupMembers: Array<string>, data: GroupMemberStats) => {
+  console.log('DATA2: ', data);
+
   const players = Object.values(data.memberlist).map(
     ({ player, player_name_with_capitalization }) => player_name_with_capitalization ?? player
   );
 
   return players.filter((player) => !groupMembers.includes(player));
 };
+
+/**
+ * Creates a map of players and their corresponding game mode.
+ * @param {GroupMemberStats} data API group member stats data
+ */
+export const gameModePlayerMap = (data: GroupMemberStats) =>
+  Object.values(data.memberlist).reduce(
+    (acc, { game_mode, player, player_name_with_capitalization }) => ({ ...acc, [player_name_with_capitalization ?? player]: game_mode }),
+    {} as Record<string, number>
+  );

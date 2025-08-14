@@ -22,7 +22,7 @@
 <div class="pb-2 border-b-2 border-black bg-grey-100">
   <div class="py-4 border-b-2 border-grey-50 bg-primary-100">
     <div class="flex items-center justify-between container mx-auto px-2">
-      <div class="flex gap-8">
+      <div class="flex gap-4">
         <div class="flex gap-2 items-center">
           <img
             class="h-8 w-8"
@@ -34,9 +34,10 @@
         </div>
 
         <div class="flex items-center gap-2 whitespace-nowrap">
-          <span class="text-2xl">Group ID:</span>
-
-          <div class="flex items-center rounded-l-sm px-2 border-2 border-grey-50 bg-primary-300">
+          <form
+            class="flex items-center rounded-l-sm px-2 border-2 border-grey-50 bg-primary-300"
+            onsubmit={onSearch}
+          >
             <input
               bind:value={inputGroupId}
               autocomplete="off"
@@ -63,7 +64,7 @@
                 />
               </button>
             {/if}
-          </div>
+          </form>
 
           {#if error}
             <span class="text-md text-red">{error.message}</span>
@@ -72,21 +73,22 @@
       </div>
 
       {#if data}
-        <div class={clsx('hidden md:flex items-center gap-4')}>
-          <span class="text-xl">{data.group_name}</span>
+        <div class={clsx('flex items-center gap-4')}>
+          <span class="hidden md:flex text-lg whitespace-nowrap"
+            >{data.group_name}&nbsp;
+            <span class="hidden lg:flex">{`(${data.member_count} members, ${data.members_with_items_synced} synced)`}</span></span
+          >
 
           <button
-            aria-label="Members"
-            class="flex items-center gap-1"
+            class="flex items-center justify-center w-6 h-6 border-2 border-black bg-linear-to-r from-button-start-stop to-button-end-stop"
+            aria-label="close"
             onclick={() => dialog.open(playerDetailMap(data))}
           >
             <img
-              class="w-6 h-6"
+              class="w-4 h-4"
               alt="Members"
               src={GnomeIcon}
             />
-
-            <span class="text-xl">{data.members.length}</span>
           </button>
         </div>
       {/if}

@@ -13,7 +13,7 @@ interface JsonResponse<T> {
 type Endpoint = 'group_collection_log' | 'group_recent_items';
 
 const API_URL = 'https://templeosrs.com/api/collection-log/';
-const API_CORS_PROXY = dev ? 'https://cors-anywhere.herokuapp.com/' : '';
+const API_CORS_PROXY = dev ? 'https://cors-anywhere.herokuapp.com/' : 'https://cors-anywhere.sequenter-osrs.workers.dev/?';
 
 /**
  * Query the given endpoint on the API asynchrounously and return the JSON result as a promise.  Throws an exception in the event that the

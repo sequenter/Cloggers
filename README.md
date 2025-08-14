@@ -21,7 +21,7 @@ A **huge** thank you to the TempleOSRS team for making fun little projects like 
 Cloggers is a [Svelte](https://svelte.dev/) project built with [Vite](https://vite.dev/), utilising [TypeScript](https://www.typescriptlang.org/). To develop this project locally:
 
 - Clone the repository
-- `npm run i` to install dependencies
+- `npm i` to install dependencies
 - `npm run dev` to launch the server at http://localhost:5173/
 
 This project uses [CORS Anywhere](https://github.com/Rob--W/cors-anywhere) as a CORS proxy to avoid issues when communicating with the API locally. This will require visiting the proxy [here](https://cors-anywhere.herokuapp.com/corsdemo) and launching the temporary demo access, otherwise API calls will error.

@@ -14,7 +14,7 @@
       <span class="text-md text-white"
         >Contribute on <a
           class="underline text-orange"
-          href="#"
+          href="https://github.com/sequenter/Cloggers"
           target="_blank">GitHub</a
         ></span
       >

@@ -1,15 +1,18 @@
 <script lang="ts">
   import { clsx } from 'clsx';
 
-  import { Icon } from '$lib/components';
+  import { Icon, PlayerDialog } from '$lib/components';
   import { collectionsFetchStore } from '$lib/stores/collections.store.svelte';
   import { searchStore } from '$lib/stores/search.store.svelte';
   import { CollectionsIcon, GnomeIcon, Spinner, searchIcon } from '$lib/util/icon';
+  import { playerDetailMap } from '$lib/util/mapping';
 
   const { data, error, isLoading } = $derived(collectionsFetchStore);
   let { groupId, setGroupId } = $derived(searchStore);
 
   let inputGroupId = $derived(groupId);
+
+  let dialog: PlayerDialog;
 
   const onSearch = () => {
     setGroupId(inputGroupId);
@@ -72,7 +75,11 @@
         <div class={clsx('hidden md:flex items-center gap-4')}>
           <span class="text-xl">{data.group_name}</span>
 
-          <div class="flex items-center gap-1">
+          <button
+            aria-label="Members"
+            class="flex items-center gap-1"
+            onclick={() => dialog.open(playerDetailMap(data))}
+          >
             <img
               class="w-6 h-6"
               alt="Members"
@@ -80,9 +87,11 @@
             />
 
             <span class="text-xl">{data.members.length}</span>
-          </div>
+          </button>
         </div>
       {/if}
     </div>
   </div>
 </div>
+
+<PlayerDialog bind:this={dialog} />

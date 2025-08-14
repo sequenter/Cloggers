@@ -38,6 +38,11 @@ export interface CollectedItem {
   players: Array<string>;
 }
 
+export interface PlayerDetail {
+  items: Array<string>;
+  uniques: Array<string>;
+}
+
 /* Fetch */
 
 export interface FetchResponse<T> {

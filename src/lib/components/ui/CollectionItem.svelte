@@ -1,8 +1,7 @@
 <script lang="ts">
   import { clsx } from 'clsx';
 
-  import Dialog from '../layout/Dialog.svelte';
-
+  import { ItemDialog } from '$lib/components';
   import { ITEMS } from '$lib/util/constants';
 
   interface Props {
@@ -12,7 +11,7 @@
     size?: string;
   }
 
-  let dialog: Dialog;
+  let dialog: ItemDialog;
 
   const { item, players, scale = 'scale-200', size = 'w-18 h-18' }: Props = $props();
 </script>
@@ -29,4 +28,4 @@
   <div class={clsx(`sprite-icon id_${item}`, scale, players.length === 0 && 'opacity-50')}></div>
 </button>
 
-<Dialog bind:this={dialog} />
+<ItemDialog bind:this={dialog} />

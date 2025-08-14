@@ -1,6 +1,6 @@
 import { CATEGORIES, ITEMS } from './constants';
 
-import type { Categories, GroupCollections } from '$lib/types';
+import type { Categories, GroupCollections, PlayerDetail } from '$lib/types';
 
 /**
  * Reduces the {@link CATEGORIES} to a key/value pair of item/category, so that the category corresponding to an item can be easily found.
@@ -29,6 +29,7 @@ const ITEM_MAP = getItemCategoryMap();
 /**
  * Collates collected items across members of a group into categories.
  * @param {GroupCollections} data API group data
+ * @param {Array<string>} [players=[]] Optional array of players to filter by
  */
 export const collectedCategoryItemsMap = (data: GroupCollections, players: Array<string> = []) => {
   const collectedMap: Partial<Record<Categories, Record<string, Array<string>>>> = {};
@@ -60,6 +61,7 @@ export const collectedCategoryItemsMap = (data: GroupCollections, players: Array
 /**
  * Collates collected items across members of a group and sorts by completion count.
  * @param {GroupCollections} data API group data
+ * @param {Array<string>} [players=[]] Optional array of players to filter by
  */
 export const collectedItemMap = (data: GroupCollections, players: Array<string> = []) => {
   const collectedMap: Record<string, Array<string>> = {};
@@ -79,4 +81,23 @@ export const collectedItemMap = (data: GroupCollections, players: Array<string> 
   return Object.entries(collectedMap)
     .map(([item, playersCollected]) => ({ item, players: playersCollected }))
     .sort((a, b) => b.players.length - a.players.length || ITEMS[a.item].localeCompare(ITEMS[b.item]));
+};
+
+/**
+ * Creates a map of players collection items and unique collection items.
+ * @param {GroupCollections} data API group data
+ */
+export const playerDetailMap = (data: GroupCollections) => {
+  const collectedUniqueMap = collectedItemMap(data).filter(({ players }) => players.length === 1);
+
+  return data.members.reduce(
+    (acc, { items, player_name_with_capitalization }) => ({
+      ...acc,
+      [player_name_with_capitalization]: {
+        items: items.map((item) => item.toString()),
+        uniques: collectedUniqueMap.filter(({ players }) => players.includes(player_name_with_capitalization)).map(({ item }) => item)
+      }
+    }),
+    {} as Record<string, PlayerDetail>
+  );
 };

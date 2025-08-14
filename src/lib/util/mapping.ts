@@ -1,6 +1,6 @@
 import { CATEGORIES, ITEMS } from './constants';
 
-import type { Categories, GroupCollections, PlayerDetail } from '$lib/types';
+import type { Categories, GroupCollections, GroupMemberStats, PlayerDetail } from '$lib/types';
 
 /**
  * Reduces the {@link CATEGORIES} to a key/value pair of item/category, so that the category corresponding to an item can be easily found.
@@ -91,13 +91,28 @@ export const playerDetailMap = (data: GroupCollections) => {
   const collectedUniqueMap = collectedItemMap(data).filter(({ players }) => players.length === 1);
 
   return data.members.reduce(
-    (acc, { items, player_name_with_capitalization }) => ({
+    (acc, { items, last_checked, player_name_with_capitalization }) => ({
       ...acc,
       [player_name_with_capitalization]: {
         items: items.map((item) => item.toString()),
+        lastSync: last_checked,
         uniques: collectedUniqueMap.filter(({ players }) => players.includes(player_name_with_capitalization)).map(({ item }) => item)
       }
     }),
     {} as Record<string, PlayerDetail>
   );
+};
+
+/**
+ * Created a map of unsynced players. These are members of a group which are not included in the group collection log due to their
+ * collection logs not being synced.
+ * @param {Array<string>} groupMembers Synced group members
+ * @param {GroupMemberStats} data API group member stats data
+ */
+export const unsyncedPlayerMap = (groupMembers: Array<string>, data: GroupMemberStats) => {
+  const players = Object.values(data.memberlist).map(
+    ({ player, player_name_with_capitalization }) => player_name_with_capitalization ?? player
+  );
+
+  return players.filter((player) => !groupMembers.includes(player));
 };

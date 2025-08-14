@@ -7,6 +7,7 @@
   import { GnomeIcon, arrowLeftIcon, searchIcon } from '$lib/util/icon';
 
   let players: Record<string, PlayerDetail> = $state({});
+  let unsyncedPlayers: Array<string> = $state([]);
   let selectedItems: Array<string> = $state([]);
   let title = $state('Group Members');
 
@@ -21,8 +22,9 @@
    * Open the dialog.
    * @param {Record<string, PlayerDetail>} playersDetail Record containing players and their statistics.
    */
-  export const open = (playersDetail: Record<string, PlayerDetail>) => {
+  export const open = (playersDetail: Record<string, PlayerDetail>, unsyncedPlayersDetail: Array<string>) => {
     players = playersDetail;
+    unsyncedPlayers = unsyncedPlayersDetail;
 
     dialog.open();
   };
@@ -73,8 +75,8 @@
       {/each}
     </ul>
   {:else}
-    <div class="flex flex-col w-full">
-      <div class="grid grid-cols-3 text-xl px-2">
+    <div class="flex flex-col w-full whitespace-nowrap">
+      <div class="grid grid-cols-3 text-xl px-2 border-b-2 border-grey-50 text-white bg-primary-300">
         <span class="flex justify-start">Member</span>
         <span class="flex justify-center">Collections</span>
         <span class="flex justify-end">Uniques</span>
@@ -112,6 +114,21 @@
         </ul>
       {:else}
         <span class="text-xl">Search for a group to view members</span>
+      {/if}
+
+      {#if unsyncedPlayers.length}
+        <details class="open:[&>summary]:border-b-2">
+          <summary class="text-xl px-2 cursor-pointer border-t-2 border-grey-50 bg-primary-300 text-white"
+            >{`Unsynced Members (${unsyncedPlayers.length})`}</summary
+          >
+          <ul class="text-xl w-full">
+            {#each unsyncedPlayers.sort((a, b) => a.localeCompare(b)) as unsyncedPlayer, i (unsyncedPlayer)}
+              <li class={clsx('px-2', i & 1 && 'bg-primary-50')}>
+                {unsyncedPlayer}
+              </li>
+            {/each}
+          </ul>
+        </details>
       {/if}
     </div>
   {/if}

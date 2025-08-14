@@ -2,12 +2,18 @@
   import { clsx } from 'clsx';
 
   import { collectionsFetchStore } from '$lib/stores/collections.store.svelte';
+  import { groupFetchStore } from '$lib/stores/group.store.svelte';
   import { searchStore } from '$lib/stores/search.store.svelte';
 
   const { selectedPlayers, toggleSelectedPlayer } = $derived(searchStore);
 
   /* Derived API data states */
   const { data } = $derived(collectionsFetchStore);
+  const { data: groupStatsData } = $derived(groupFetchStore);
+
+  $effect(() => {
+    console.log(groupStatsData);
+  });
 
   // Rank members by collections logged
   const ranking = $derived(

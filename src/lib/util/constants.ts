@@ -2,10 +2,10 @@
 
 export const MAIN_CATEGORIES = {
     "bosses": ["abyssal_sire", "alchemical_hydra", "araxxor", "amoxliatl", "barrows_chests", "bryophyta", "callisto_and_artio", "cerberus", "chaos_elemental", "chaos_fanatic", "commander_zilyana", "corporeal_beast", "crazy_archaeologist", "dagannoth_kings", "deranged_archaeologist", "doom_of_mokhaiotl", "duke_sucellus", "fortis_colosseum", "general_graardor", "giant_mole", "grotesque_guardians", "hespori", "hueycoatl", "kalphite_queen", "king_black_dragon", "kraken", "kree_arra", "the_leviathan", "moons_of_peril", "kril_tsutsaroth", "nex", "obor", "phantom_muspah", "royal_titans", "sarachnis", "scorpia", "scurrius", "skotizo", "tempoross", "the_fight_caves", "the_gauntlet", "the_inferno", "the_nightmare", "thermonuclear_smoke_devil", "vardorvis", "venenatis_and_spindel", "vetion_and_calvarion", "vorkath", "the_whisperer", "wintertodt", "yama", "zalcano", "zulrah"],
+    "raids": ["chambers_of_xeric", "theatre_of_blood", "tombs_of_amascut"],
     "clues": ["beginner_treasure_trails", "easy_treasure_trails", "elite_treasure_trails", "third_age", "hard_treasure_trails", "gilded", "master_treasure_trails", "mimic", "medium_treasure_trails", "shared_treasure_trail_rewards", "scroll_cases"],
     "minigames": ["barbarian_assault", "brimhaven_agility_arena", "castle_wars", "fishing_trawler", "giants_foundry", "gnome_restaurant", "guardians_of_the_rift", "hallowed_sepulchre", "last_man_standing", "magic_training_arena", "mahogany_homes", "mastering_mixology", "pest_control", "rogues_den", "shades_of_mortton", "soul_wars", "temple_trekking", "tithe_farm", "trouble_brewing", "vale_totems", "volcanic_mine"],
     "other": ["aerial_fishing", "all_pets", "camdozaal", "champions_challenge", "chaos_druids", "chompy_bird_hunting", "colossal_wyrm_agility", "creature_creation", "cyclopes", "forestry", "fossil_island_notes", "gloughs_experiments", "hunter_guild", "monkey_backpacks", "motherlode_mine", "my_notes", "random_events", "revenants", "rooftop_agility", "shayzien_armour", "shooting_stars", "skilling_pets", "slayer", "tormented_demons", "tzhaar", "miscellaneous"],
-    "raids": ["chambers_of_xeric", "theatre_of_blood", "tombs_of_amascut"]
 };
 
 export const CATEGORIES = {

@@ -3,11 +3,14 @@
 
   import { Icon, PlayerDialog } from '$lib/components';
   import { collectionsFetchStore } from '$lib/stores/collections.store.svelte';
+  import { groupFetchStore } from '$lib/stores/group.store.svelte';
   import { searchStore } from '$lib/stores/search.store.svelte';
   import { CollectionsIcon, GnomeIcon, Spinner, searchIcon } from '$lib/util/icon';
-  import { playerDetailMap } from '$lib/util/mapping';
+  import { playerDetailMap, unsyncedPlayerMap } from '$lib/util/mapping';
 
   const { data, error, isLoading } = $derived(collectionsFetchStore);
+  const { data: groupStatsData } = $derived(groupFetchStore);
+
   let { groupId, setGroupId } = $derived(searchStore);
 
   let inputGroupId = $derived(groupId);
@@ -79,17 +82,26 @@
             <span class="hidden lg:flex">{`(${data.member_count} members, ${data.members_with_items_synced} synced)`}</span></span
           >
 
-          <button
-            class="flex items-center justify-center w-6 h-6 border-2 border-black bg-linear-to-r from-button-start-stop to-button-end-stop"
-            aria-label="close"
-            onclick={() => dialog.open(playerDetailMap(data))}
-          >
-            <img
-              class="w-4 h-4"
-              alt="Members"
-              src={GnomeIcon}
-            />
-          </button>
+          {#if groupStatsData}
+            <button
+              class="flex items-center justify-center w-6 h-6 border-2 border-black bg-linear-to-r from-button-start-stop to-button-end-stop"
+              aria-label="close"
+              onclick={() =>
+                dialog.open(
+                  playerDetailMap(data),
+                  unsyncedPlayerMap(
+                    data.members.map(({ player_name_with_capitalization }) => player_name_with_capitalization),
+                    groupStatsData
+                  )
+                )}
+            >
+              <img
+                class="w-4 h-4"
+                alt="Members"
+                src={GnomeIcon}
+              />
+            </button>
+          {/if}
         </div>
       {/if}
     </div>

@@ -1,38 +1,27 @@
-# sv
+# Cloggers
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Cloggers is deployed on GitHub Pages.
 
-## Creating a project
+Cloggers utilises [TempleOSRS](https://templeosrs.com/api_doc.php) APIs to collate and display group collection log completion. This includes:
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Collectively displaying how many members have achieved a collection log, across all collection items
+- The most collected - and therefore common - items within the group
+- The least collected - and therefore scarce - items within the group
+- Which members have collected which items
+- The ability to filter collections by members
+- Group rankings by the amount of collected items
+- Unique collection items achieved by group members
 
-```sh
-# create a new project in the current directory
-npx sv create
+To be able to utilise this tool, OSRS players will need to install the [TempleOSRS plugin](https://runelite.net/plugin-hub/show/temple-osrs) and sync their collection logs in-game. Oonce synced, members will need to be a part of a [TempleOSRS group](https://templeosrs.com/groups/view_groups.php). Then, simply search for the group ID to view group collection log stats.
 
-# create a new project in my-app
-npx sv create my-app
-```
+A **huge** thank you to the TempleOSRS team for making fun little projects like this possible!
 
-## Developing
+## Development
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Cloggers is a [Svelte](https://svelte.dev/) project built with [Vite](https://vite.dev/), utilising [TypeScript](https://www.typescriptlang.org/). To develop this project locally:
 
-```sh
-npm run dev
+- Clone the repository
+- `npm run i` to install dependencies
+- `npm run dev` to launch the server at http://localhost:5173/
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+This project uses [CORS Anywhere](https://github.com/Rob--W/cors-anywhere) as a CORS proxy to avoid issues when communicating with the API locally. This will require visiting the proxy [here](https://cors-anywhere.herokuapp.com/corsdemo) and launching the temporary demo access, otherwise API calls will error.

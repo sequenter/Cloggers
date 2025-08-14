@@ -1,6 +1,6 @@
 # Cloggers
 
-Cloggers is deployed on GitHub Pages.
+Cloggers is deployed on [GitHub Pages](https://sequenter.github.io/Cloggers/).
 
 Cloggers utilises [TempleOSRS](https://templeosrs.com/api_doc.php) APIs to collate and display group collection log completion. This includes:
 

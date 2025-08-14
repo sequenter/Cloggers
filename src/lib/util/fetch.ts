@@ -27,12 +27,7 @@ const fetchEndpoint = async <T>(endpoint: Endpoint, params: Record<string, strin
     .map(([key, value]) => `${key}=${value}`)
     .join('&');
 
-  const response = await fetch(`${API_CORS_PROXY}${API_URL}${endpoint}.php?${paramString}`, {
-    headers: {
-      'Content-type': 'application/json'
-    },
-    method: 'GET'
-  });
+  const response = await fetch(`${API_CORS_PROXY}${API_URL}${endpoint}.php?${paramString}`);
 
   const { data, error }: JsonResponse<T> = await response.json();
 

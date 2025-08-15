@@ -69,7 +69,7 @@
   {#if selectedItems.length}
     <ul class="text-xl w-full">
       {#each selectedItems as selectedItem, i (selectedItem)}
-        <li class={clsx('flex items-center gap-2 px-2', i & 1 && 'bg-primary-50')}>
+        <li class="flex items-center gap-2 px-2 even:bg-primary-50">
           <div class={`sprite-icon id_${selectedItem}`}></div>
 
           <span>{ITEMS[selectedItem]}</span>
@@ -77,7 +77,7 @@
       {/each}
     </ul>
   {:else}
-    <div class="flex flex-col w-full whitespace-nowrap min-h-0 overflow-auto">
+    <div class="flex flex-col w-full whitespace-nowrap overflow-auto">
       <div class="sticky top-0 grid grid-cols-4 text-xl px-2 border-b-2 border-grey-50 text-white bg-primary-300">
         <span class="flex justify-center">Member</span>
         <span class="flex justify-center">Collections</span>
@@ -87,8 +87,8 @@
 
       {#if Object.keys(players).length}
         <ul class="text-xl w-full">
-          {#each Object.entries(players).sort((a, b) => a[0].localeCompare(b[0])) as [player, { items, uniques }], i (player)}
-            <li class={clsx('px-2', i & 1 && 'bg-primary-50')}>
+          {#each Object.entries(players).sort((a, b) => a[0].localeCompare(b[0])) as [player, { items, uniques }] (player)}
+            <li class="px-2 even:bg-primary-50">
               <div class="grid grid-cols-4 text-xl">
                 <div class="flex items-center justify-between gap-2">
                   <span>{player}</span>
@@ -132,8 +132,8 @@
             >{`Unsynced members (${unsyncedPlayers.length})`}</summary
           >
           <ul class="text-xl w-full">
-            {#each unsyncedPlayers.sort((a, b) => a.localeCompare(b)) as unsyncedPlayer, i (unsyncedPlayer)}
-              <li class={clsx('flex items-center justify-between gap-2 px-2', i & 1 && 'bg-primary-50')}>
+            {#each unsyncedPlayers.sort((a, b) => a.localeCompare(b)) as unsyncedPlayer (unsyncedPlayer)}
+              <li class="flex items-center justify-between gap-2 px-2 even:bg-primary-50">
                 <span>{unsyncedPlayer}</span>
 
                 <ModeIcon player={unsyncedPlayer} />

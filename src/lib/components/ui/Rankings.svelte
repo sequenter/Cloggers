@@ -96,7 +96,7 @@
             <div class="flex items-center gap-2">
               <ModeIcon {player} />
 
-              <span class="text-xl">{itemTotal}</span>
+              <span class="text-xl text-white">{itemTotal}</span>
             </div>
           </div>
         </button>

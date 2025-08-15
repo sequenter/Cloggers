@@ -1,12 +1,21 @@
 <script lang="ts">
   import CollectionItem from './CollectionItem.svelte';
 
+  import { collectionsFetchStore } from '$lib/stores/collections.store.svelte';
+  import { searchStore } from '$lib/stores/search.store.svelte';
   import type { CollectedItem } from '$lib/types';
 
   interface Props {
     items: Array<CollectedItem>;
     title: string;
   }
+  const { selectedPlayers } = $derived(searchStore);
+
+  /* Derived API data states */
+  const { data } = $derived(collectionsFetchStore);
+
+  // All group members
+  const groupPlayers = $derived(data ? data.members.map(({ player_name_with_capitalization }) => player_name_with_capitalization) : []);
 
   const { items, title }: Props = $props();
 </script>
@@ -24,6 +33,9 @@
             <CollectionItem
               scale="scale-100"
               size="w-9 h-9"
+              playersNotCollected={groupPlayers.filter(
+                (player) => !players.includes(player) && (!selectedPlayers.length || selectedPlayers.includes(player))
+              )}
               {item}
               {players}
             />

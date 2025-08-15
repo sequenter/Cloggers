@@ -23,6 +23,9 @@
   /* Derived API data states */
   const { data } = $derived(collectionsFetchStore);
 
+  // All group members
+  const groupPlayers = $derived(data ? data.members.map(({ player_name_with_capitalization }) => player_name_with_capitalization) : []);
+
   // Collated collected items across members
   const collectedItems = $derived(data ? collectedCategoryItemsMap(data, selectedPlayers) : {});
 
@@ -85,8 +88,8 @@
 
     <div class="grid grid-cols-7 h-120 overflow-hidden">
       <ul class="col-span-2 overflow-x-hidden overflow-y-scroll">
-        {#each tabCategories as tabCategory, i (tabCategory)}
-          <li class={clsx(i & 1 && 'bg-primary-50', selectedCategory === tabCategory ? 'bg-selected' : 'hover:bg-selected')}>
+        {#each tabCategories as tabCategory (tabCategory)}
+          <li class={clsx('even:bg-primary-50', selectedCategory === tabCategory ? 'bg-selected' : 'hover:bg-selected')}>
             <button
               class={clsx('capitalize text-xl text-shadow-runescape pl-1 w-full text-left', isGreenLog(tabCategory) && 'text-green')}
               onclick={() => onCategorySelected(tabCategory)}
@@ -116,9 +119,14 @@
 
         <div class="flex flex-wrap gap-4 content-start px-4 py-2 grow overflow-x-hidden overflow-y-scroll">
           {#each categoryItems as categoryItem (categoryItem)}
+            {@const collected = getCollectedItemPlayers(selectedCategory, categoryItem)}
+
             <CollectionItem
               item={categoryItem}
-              players={getCollectedItemPlayers(selectedCategory, categoryItem)}
+              players={collected}
+              playersNotCollected={groupPlayers.filter(
+                (player) => !collected.includes(player) && (!selectedPlayers.length || selectedPlayers.includes(player))
+              )}
             />
           {/each}
         </div>

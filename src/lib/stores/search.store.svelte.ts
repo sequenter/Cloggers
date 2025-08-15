@@ -8,6 +8,7 @@ const createSearchStore = () => {
    */
   const setGroupId = (value: string) => {
     groupId = value;
+    selectedPlayers = [];
   };
 
   /**
@@ -15,8 +16,6 @@ const createSearchStore = () => {
    * @param {Array<string>} value Selected players
    */
   const setSelectedPlayers = (value: Array<string>) => {
-    console.log(value);
-
     selectedPlayers = value;
   };
 

@@ -9,7 +9,23 @@ const createGroupFetchStore = () => {
     groupId ? fetchStore(() => fetchGroupMemberStats(groupId)) : { data: undefined, error: undefined, isLoading: false }
   );
 
+  // Player game mode map
+  const gameModePlayerMap = $derived(
+    data
+      ? Object.values(data.memberlist).reduce(
+          (acc, { game_mode, player, player_name_with_capitalization }) => ({
+            ...acc,
+            [player_name_with_capitalization ?? player]: game_mode ?? 0
+          }),
+          {} as Record<string, number>
+        )
+      : {}
+  );
+
   return {
+    get gameModePlayerMap() {
+      return gameModePlayerMap;
+    },
     get data() {
       return data;
     },

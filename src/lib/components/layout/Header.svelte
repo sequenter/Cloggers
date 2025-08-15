@@ -77,7 +77,7 @@
 
       {#if data}
         <div class={clsx('flex items-center gap-4')}>
-          <span class="hidden md:flex text-lg whitespace-nowrap"
+          <span class="hidden md:flex whitespace-nowrap"
             >{data.group_name}&nbsp;
             <span class="hidden lg:flex">{`(${data.member_count} members, ${data.members_with_items_synced} synced)`}</span></span
           >

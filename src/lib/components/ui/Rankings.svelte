@@ -1,18 +1,19 @@
 <script lang="ts">
   import { clsx } from 'clsx';
 
+  import ModeIcon from './ModeIcon.svelte';
+
   import { Icon } from '$lib/components';
   import { collectionsFetchStore } from '$lib/stores/collections.store.svelte';
   import { groupFetchStore } from '$lib/stores/group.store.svelte';
   import { searchStore } from '$lib/stores/search.store.svelte';
   import { closeIcon, ironmanIcon } from '$lib/util/icon';
-  import { gameModePlayerMap } from '$lib/util/mapping';
 
   const { selectedPlayers, resetSelectedPlayers, setSelectedPlayers, toggleSelectedPlayer } = $derived(searchStore);
 
   /* Derived API data states */
   const { data } = $derived(collectionsFetchStore);
-  const { data: groupStatsData } = $derived(groupFetchStore);
+  const { data: groupStatsData, gameModePlayerMap } = $derived(groupFetchStore);
 
   // Rank members by collections logged
   const ranking = $derived(
@@ -37,7 +38,7 @@
         title="Filter by ironman members"
         onclick={() => {
           setSelectedPlayers(
-            Object.entries(gameModePlayerMap(groupStatsData)).reduce(
+            Object.entries(gameModePlayerMap).reduce(
               (acc, [player, mode]) => (mode > 0 && members.includes(player) ? [...acc, player] : acc),
               [] as Array<string>
             )
@@ -45,7 +46,7 @@
         }}
       >
         <img
-          class="w-4 h-4 text-black"
+          class="w-4 h-4"
           alt="Ironman"
           src={ironmanIcon}
         />
@@ -75,10 +76,7 @@
     {#if ranking.length}
       {#each ranking as { player, itemTotal }, i (player)}
         <button
-          class={clsx(
-            'flex items-center min-w-48 border-2 border-grey-50',
-            selectedPlayers.includes(player) ? 'bg-selected' : 'bg-primary-300'
-          )}
+          class={clsx('flex items-center border-2 border-grey-50', selectedPlayers.includes(player) ? 'bg-selected' : 'bg-primary-300')}
           onclick={() => toggleSelectedPlayer(player)}
         >
           {#if i < 3}
@@ -92,9 +90,14 @@
             >
           {/if}
 
-          <div class="flex items-center justify-between px-2 w-full">
+          <div class="flex items-center justify-between gap-2 px-2 w-full">
             <span class="text-xl">{`${i > 2 ? `${i + 1}.` : ''} ${player}`}</span>
-            <span class="text-xl">{itemTotal}</span>
+
+            <div class="flex items-center gap-2">
+              <ModeIcon {player} />
+
+              <span class="text-xl">{itemTotal}</span>
+            </div>
           </div>
         </button>
       {/each}

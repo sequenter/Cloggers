@@ -89,6 +89,7 @@
 }
 
 @theme {
+  --color-background-light: #d3c2a1;
   --color-background: #2b2620;
   --color-selected: #70695f;
 

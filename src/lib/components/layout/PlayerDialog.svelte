@@ -1,6 +1,8 @@
 <script lang="ts">
   import { clsx } from 'clsx';
 
+  import ModeIcon from '../ui/ModeIcon.svelte';
+
   import { Dialog, Icon } from '$lib/components';
   import type { PlayerDetail } from '$lib/types';
   import { ITEMS } from '$lib/util/constants';
@@ -75,20 +77,24 @@
       {/each}
     </ul>
   {:else}
-    <div class="flex flex-col w-full whitespace-nowrap">
-      <div class="grid grid-cols-3 text-xl px-2 border-b-2 border-grey-50 text-white bg-primary-300">
-        <span class="flex justify-start">Member</span>
+    <div class="flex flex-col w-full whitespace-nowrap min-h-0 overflow-auto">
+      <div class="sticky top-0 grid grid-cols-4 text-xl px-2 border-b-2 border-grey-50 text-white bg-primary-300">
+        <span class="flex justify-center">Member</span>
         <span class="flex justify-center">Collections</span>
-        <span class="flex justify-end">Uniques</span>
+        <span class="flex justify-center">Uniques</span>
+        <span class="flex justify-center">Mode</span>
       </div>
 
       {#if Object.keys(players).length}
         <ul class="text-xl w-full">
           {#each Object.entries(players).sort((a, b) => a[0].localeCompare(b[0])) as [player, { items, uniques }], i (player)}
             <li class={clsx('px-2', i & 1 && 'bg-primary-50')}>
-              <div class="grid grid-cols-3 text-xl">
-                <span class="flex justify-start">{player}</span>
-                <span class="flex justify-center">{items.length}</span>
+              <div class="grid grid-cols-4 text-xl">
+                <div class="flex items-center justify-between gap-2">
+                  <span>{player}</span>
+                </div>
+
+                <span class="flex justify-end">{items.length}</span>
 
                 <div class="flex gap-2 justify-end">
                   <span>{uniques.length}</span>
@@ -108,6 +114,10 @@
                     </button>
                   {/if}
                 </div>
+
+                <div class="flex items-center justify-end">
+                  <ModeIcon {player} />
+                </div>
               </div>
             </li>
           {/each}
@@ -118,13 +128,15 @@
 
       {#if unsyncedPlayers.length}
         <details class="open:[&>summary]:border-b-2">
-          <summary class="text-xl px-2 cursor-pointer border-t-2 border-grey-50 bg-primary-300 text-white"
+          <summary class="sticky top-0 text-xl px-2 cursor-pointer border-t-2 border-grey-50 bg-primary-300 text-white"
             >{`Unsynced members (${unsyncedPlayers.length})`}</summary
           >
           <ul class="text-xl w-full">
             {#each unsyncedPlayers.sort((a, b) => a.localeCompare(b)) as unsyncedPlayer, i (unsyncedPlayer)}
-              <li class={clsx('px-2', i & 1 && 'bg-primary-50')}>
-                {unsyncedPlayer}
+              <li class={clsx('flex items-center justify-between gap-2 px-2', i & 1 && 'bg-primary-50')}>
+                <span>{unsyncedPlayer}</span>
+
+                <ModeIcon player={unsyncedPlayer} />
               </li>
             {/each}
           </ul>

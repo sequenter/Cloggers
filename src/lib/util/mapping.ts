@@ -120,13 +120,3 @@ export const unsyncedPlayerMap = (groupMembers: Array<string>, data: GroupMember
 
   return players.filter((player) => !groupMembers.includes(player));
 };
-
-/**
- * Creates a map of players and their corresponding game mode.
- * @param {GroupMemberStats} data API group member stats data
- */
-export const gameModePlayerMap = (data: GroupMemberStats) =>
-  Object.values(data.memberlist).reduce(
-    (acc, { game_mode, player, player_name_with_capitalization }) => ({ ...acc, [player_name_with_capitalization ?? player]: game_mode }),
-    {} as Record<string, number>
-  );

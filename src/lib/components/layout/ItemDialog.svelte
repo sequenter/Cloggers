@@ -1,6 +1,8 @@
 <script lang="ts">
   import { clsx } from 'clsx';
 
+  import ModeIcon from '../ui/ModeIcon.svelte';
+
   import { Dialog } from '$lib/components';
   import { ITEMS } from '$lib/util/constants';
 
@@ -34,7 +36,11 @@
   {#if players.length}
     <ul class="text-xl w-full">
       {#each players.sort() as player, i (player)}
-        <li class={clsx('px-2', i & 1 && 'bg-primary-50')}>{player}</li>
+        <li class={clsx('flex items-center justify-between px-2', i & 1 && 'bg-primary-50')}>
+          <span>{player}</span>
+
+          <ModeIcon {player} />
+        </li>
       {/each}
     </ul>
   {:else}

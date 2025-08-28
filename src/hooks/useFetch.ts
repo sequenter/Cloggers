@@ -27,7 +27,7 @@ export const useFetch = <T>(endpoint: string) => {
         })(await fetchEndpoint<T>(endpoint, params));
       } catch (error) {
         // Update state error
-        setState((curr) => ({ ...curr, error: error instanceof Error ? error : new Error(String(error)) }));
+        setState((curr) => ({ ...curr, error: error instanceof Error ? error : new Error(String(error)), isLoading: false }));
       }
     },
     [endpoint]

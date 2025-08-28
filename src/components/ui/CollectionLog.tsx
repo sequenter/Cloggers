@@ -82,7 +82,7 @@ const CollectionLog = () => {
             <button
               key={category}
               className={clsx(
-                'capitalize text-xl text-shadow-runescape rounded-t-lg border-t-2 border-l-2 border-r-2 border-grey-50',
+                'text-xl text-shadow-runescape rounded-t-lg border-t-2 border-l-2 border-r-2 border-grey-50',
                 selectedTab === category ? 'bg-primary-200' : 'bg-primary-300 hover:bg-primary-200'
               )}
               onClick={() => onCategorySelected(category)}
@@ -101,7 +101,7 @@ const CollectionLog = () => {
               >
                 <button
                   className={clsx(
-                    'capitalize text-xl text-shadow-runescape pl-1 w-full text-left',
+                    'text-xl text-shadow-runescape pl-1 w-full text-left',
                     isCategoryGreenLogged(subCategory) && 'text-green'
                   )}
                   onClick={() => setSelectedCategory(subCategory)}
@@ -114,7 +114,7 @@ const CollectionLog = () => {
 
           <div className="flex flex-col col-span-5 border-l-2 border-primary-50 overflow-hidden">
             <div className="flex flex-col px-4 border-b-2 border-primary-50">
-              <span className="capitalize font-bold text-2xl">{selectedCategory.replaceAll('_', ' ')}</span>
+              <span className="font-bold text-2xl">{selectedCategory.replaceAll('_', ' ')}</span>
 
               <div className="flex gap-2">
                 <span className="text-xl">Obtained: </span>

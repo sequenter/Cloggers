@@ -6,13 +6,18 @@ import { useGroup } from '@hooks/useGroup';
 import type { ItemDetail } from '@types';
 
 import { bifilter } from '@utils/common';
-import { arrowLeftIcon, gnomeIcon, searchIcon } from '@utils/icon';
+import { arrowLeftIcon, searchIcon } from '@utils/icon';
 
 import { useMemo, useState } from 'react';
 
+interface FocusedPlayer {
+  gameMode: number;
+  name: string;
+  uniques: Array<ItemDetail>;
+}
+
 export const PlayerDialog = () => {
-  const [uniqueItems, setUniqueItems] = useState<Array<ItemDetail>>([]);
-  const [title, setTitle] = useState('Group Members');
+  const [focusedPlayer, setFocusedPlayer] = useState<FocusedPlayer | null>(null);
 
   const { players } = useGroup();
 
@@ -28,47 +33,29 @@ export const PlayerDialog = () => {
     [players]
   );
 
-  /**
-   * On player uniques button press, update states to show items.
-   * @param {string} playerName Player name
-   * * @param {Array<ItemDetail>} uniques Player's unique collections
-   */
-  const onShowUniques = (playerName: string, uniques: Array<ItemDetail>) => {
-    setTitle(`${playerName}'s Unique Collections`);
-    setUniqueItems(uniques);
-  };
-
-  /**
-   * On player uniques return button press.
-   */
-  const onCloseUniques = () => {
-    setTitle('Group Members');
-    setUniqueItems([]);
-  };
-
   return (
     <Dialog
-      title={title}
-      onClose={onCloseUniques}
+      title={focusedPlayer ? `${focusedPlayer.name}'s Unique Collections` : 'Group Members'}
+      onClose={() => setFocusedPlayer(null)}
       controls={
-        uniqueItems.length > 0 && (
+        focusedPlayer && (
           <IconButton
             title="Return"
             path={arrowLeftIcon}
-            onClick={onCloseUniques}
+            onClick={() => setFocusedPlayer(null)}
           />
         )
       }
       icon={
-        <img
-          className="w-6 h-6"
-          src={gnomeIcon}
+        <ModeIcon
+          gameMode={focusedPlayer ? focusedPlayer.gameMode : 0}
+          minMode={0}
         />
       }
     >
-      {uniqueItems.length > 0 ? (
+      {focusedPlayer ? (
         <ul className="text-xl w-full">
-          {uniqueItems
+          {focusedPlayer.uniques
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(({ item, name }) => (
               <li
@@ -104,7 +91,7 @@ export const PlayerDialog = () => {
                   <span>{uniques.length}</span>
 
                   {uniques.length > 0 && (
-                    <button onClick={() => onShowUniques(name, uniques)}>
+                    <button onClick={() => setFocusedPlayer({ gameMode, name, uniques })}>
                       <Icon
                         className="w-4 h-4"
                         title="Show uniques"

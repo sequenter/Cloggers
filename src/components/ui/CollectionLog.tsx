@@ -22,12 +22,11 @@ const CollectionLog = () => {
      * Category items related to the selected sub category, with item collection detail.
      */
     () =>
-      SUB_CATEGORIES[selectedCategory].items.map(
+      SUB_CATEGORIES[selectedCategory].map(
         (item) =>
           collectedItems?.[item] ?? {
             item,
-            categories: ITEMS[item].categories,
-            name: ITEMS[item].name,
+            name: ITEMS[item],
             playersCollected: [],
             playersNotCollected: []
           }
@@ -49,7 +48,7 @@ const CollectionLog = () => {
      * @param {SubCategories} subCategory Sub category to determine
      */
     (subCategory: SubCategories) => {
-      for (const item of SUB_CATEGORIES[subCategory].items) {
+      for (const item of SUB_CATEGORIES[subCategory]) {
         if (!collectedItems[item]) {
           return false;
         }

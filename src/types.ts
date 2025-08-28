@@ -11,7 +11,6 @@ export type SubCategories = (typeof SUB_CATEGORIES_ARRAY)[number];
 export type MainCategories = (typeof MAIN_CATEGORIES_ARRAY)[number];
 
 export interface ItemDetail {
-  categories: Array<SubCategories>;
   item: string;
   name: string;
   playersCollected: Array<string>;

@@ -3,6 +3,7 @@ import { Icon } from '@components';
 import { clsx } from 'clsx';
 
 interface Props {
+  className?: string;
   disabled?: boolean;
   image?: boolean;
   path: string;
@@ -10,12 +11,13 @@ interface Props {
   onClick: Runnable;
 }
 
-const IconButton = ({ disabled = false, image = false, path, title, onClick }: Props) => {
+const IconButton = ({ className, disabled = false, image = false, path, title, onClick }: Props) => {
   return (
     <button
       className={clsx(
         'flex items-center justify-center w-6 h-6 border-2 border-black bg-linear-to-r from-button-start-stop to-button-end-stop',
-        disabled && 'opacity-50'
+        disabled && 'opacity-50',
+        className
       )}
       disabled={disabled}
       title={title}

@@ -1,17 +1,21 @@
-import { CollectionItem } from '@components';
+import { CollectionItem, IconButton } from '@components';
 
 import { useCollections } from '@hooks/useCollections';
 
 import { type MainCategories, type SubCategories } from '@types';
 
 import { ITEMS, MAIN_CATEGORIES, SUB_CATEGORIES } from '@utils/constants';
+import { checkIcon, circleIcon, closeIcon } from '@utils/icon';
 
 import { clsx } from 'clsx';
 import { useCallback, useMemo, useState } from 'react';
 
+type Filter = 'collected' | 'all' | 'notCollected';
+
 const COLLECTION_LOG_TABS = Object.keys(MAIN_CATEGORIES) as Array<MainCategories>;
 
 const CollectionLog = () => {
+  const [filter, setFilter] = useState<Filter>('all');
   const [selectedTab, setSelectedTab] = useState<MainCategories>(COLLECTION_LOG_TABS[0]);
   const [selectedCategory, setSelectedCategory] = useState<SubCategories>(MAIN_CATEGORIES[selectedTab][0]);
 
@@ -32,6 +36,19 @@ const CollectionLog = () => {
           }
       ),
     [collectedItems, selectedCategory]
+  );
+
+  const filteredCategoryItems = useMemo(
+    /**
+     * Filter category items by players collected determined by the currently active filter.
+     */
+    () =>
+      filter === 'all'
+        ? categoryItems
+        : categoryItems.filter((categoryItem) =>
+            filter === 'collected' ? categoryItem.playersCollected.length > 0 : categoryItem.playersCollected.length === 0
+          ),
+    [categoryItems, filter]
   );
 
   const totalCollectedCategoryItems = useMemo(
@@ -70,10 +87,35 @@ const CollectionLog = () => {
 
   return (
     <div className="flex flex-col gap-2 p-2 border-2 border-black bg-grey-100">
-      <div className="flex justify-center py-2 border-2 border-grey-50 bg-primary-100">
+      <div className="relative flex justify-center py-2 border-2 border-grey-50 bg-primary-100">
         <span className="font-bold text-2xl">
           Collection Log - {Object.keys(collectedItems).length}/{Object.keys(ITEMS).length}
         </span>
+
+        <div className="absolute right-2 flex items-center gap-2">
+          <span className="invisible sm:visible">Filter:</span>
+
+          <div className="flex items-center gap-1">
+            <IconButton
+              className={clsx(filter === 'notCollected' ? '' : 'opacity-50 hover:opacity-100')}
+              title="Show uncollected"
+              path={closeIcon}
+              onClick={() => setFilter('notCollected')}
+            />
+            <IconButton
+              className={clsx(filter === 'all' ? '' : 'opacity-50 hover:opacity-100')}
+              title="Show all"
+              path={circleIcon}
+              onClick={() => setFilter('all')}
+            />
+            <IconButton
+              className={clsx(filter === 'collected' ? '' : 'opacity-50 hover:opacity-100')}
+              title="Show collected"
+              path={checkIcon}
+              onClick={() => setFilter('collected')}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="flex flex-col pt-2 border-2 border-grey-50 bg-primary-100">
@@ -132,7 +174,7 @@ const CollectionLog = () => {
             </div>
 
             <div className="flex flex-wrap gap-4 content-start px-4 py-2 grow overflow-x-hidden overflow-y-scroll">
-              {categoryItems.map((categoryItem) => (
+              {filteredCategoryItems.map((categoryItem) => (
                 <CollectionItem
                   key={categoryItem.item}
                   {...categoryItem}

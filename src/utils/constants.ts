@@ -413,7 +413,7 @@ export const SUB_CATEGORIES: Record<SubCategories, { boss_name?: string | Array<
     },
     miscellaneous: {
         boss_name: ['Rune Dragon', 'Adamant Dragon', 'Mithril Dragon', 'Rummage Skeleton', 'Evil Chicken', 'Lizardman Shamans', 'Crystal Chest'],
-        items: ['21509', '13071', '13576', '7991', '7993', '7989', '10976', '10977', '11942', '26945', '19679', '19681', '19683', '11338', '11335', '2366', '22100', '22103', '21918', '1249', '19707', '21838', '20439', '20436', '20442', '20433', '21343', '21345', '21392', '9007', '9008', '9010', '9011', '22374', '20754', '22875', '7536', '7538', '13392', '23522', '23943', '24000', '23959', '24034', '24037', '24040', '24046', '24043', '6571', '21649', '25844', '25846', '28813', '30324']
+        items: ['21509', '13071', '13576', '7991', '7993', '7989', '10976', '10977', '11942', '26945', '19679', '19681', '19683', '11338', '11335', '2366', '22100', '22103', '21918', '1249', '19707', '21838', '20439', '20436', '20442', '20433', '21343', '21345', '21392', '9007', '9008', '9010', '9011', '22374', '20754', '22875', '7536', '7538', '13392', '23522', '23943', '24000', '23959', '24034', '24037', '24040', '24046', '24043', '6571', '21649', '25844', '25846', '28813', '30111', '30324']
     },
     chambers_of_xeric: {
         boss_name: ['Chambers of Xeric', 'Chambers of Xeric Challenge Mode'],
@@ -6669,6 +6669,10 @@ export const ITEMS: Record<string, { name: string, categories: Array<SubCategori
     name: 'Huasca seed',
     categories: ['hueycoatl']
   },
+  "30111": {
+    name: "Helmet of the moon",
+    categories: ['miscellaneous']
+  },
   '30152': {
     name: 'Huberte',
     categories: ['hueycoatl', 'all_pets']
@@ -6868,5 +6872,6 @@ export const ITEMS: Record<string, { name: string, categories: Array<SubCategori
   '31130': {
     name: 'Dom',
     categories: ['doom_of_mokhaiotl', 'all_pets']
-  }
+  },
+  
 };

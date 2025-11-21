@@ -1,9 +1,7 @@
-import { IconButton, ModeIcon } from '@components';
+import { ModeIcon, Select } from '@components';
 
 import { useGroup } from '@hooks/useGroup';
 import { useSearch } from '@hooks/useSearch';
-
-import { closeIcon, ironmanIcon } from '@utils/icon';
 
 import { clsx } from 'clsx';
 import { useCallback, useMemo } from 'react';
@@ -24,14 +22,18 @@ const Ranking = () => {
     [players]
   );
 
-  const onFilterIronman = useCallback(
+  const onFilter = useCallback(
     /**
-     * On filter ironman button press, filter players by their game mode.
+     * On filter select change, filter players by their game mode.
      */
-    () => {
-      setSelectedPlayers(rankings.filter(({ gameMode }) => gameMode > 0).map(({ name }) => name));
+    (value: number) => {
+      if (value === -1) {
+        resetSelectedPlayers();
+      } else {
+        setSelectedPlayers(rankings.filter(({ gameMode }) => gameMode === value).map(({ name }) => name));
+      }
     },
-    [rankings, setSelectedPlayers]
+    [rankings, resetSelectedPlayers, setSelectedPlayers]
   );
 
   return (
@@ -39,28 +41,17 @@ const Ranking = () => {
       <div className="relative flex items-center justify-center gap-4 p-2 border-2 border-grey-50 bg-primary-100">
         <span className="font-bold text-2xl">Group Rankings</span>
 
-        <div className="absolute left-2 flex items-center gap-2">
-          <IconButton
-            title="Filter by ironman"
-            disabled={!rankings.length}
-            path={ironmanIcon}
-            onClick={onFilterIronman}
-            image
-          />
-        </div>
-
         <div className="absolute right-2 flex items-center gap-2">
-          {selectedPlayers.length > 0 && (
-            <span className="invisible sm:visible">
-              {`Filtering ${selectedPlayers.length} member${selectedPlayers.length === 1 ? '' : 's'}`}
-            </span>
-          )}
-
-          <IconButton
-            title="Clear filter"
-            disabled={!selectedPlayers.length}
-            path={closeIcon}
-            onClick={() => resetSelectedPlayers()}
+          <Select
+            label="Filter:"
+            options={[
+              { name: 'All', value: -1 },
+              { name: 'Normal', value: 0 },
+              { name: 'Ironman', value: 1 },
+              { name: 'Hardcore Ironman', value: 3 },
+              { name: 'Ultimate Ironman', value: 2 }
+            ]}
+            onChange={onFilter}
           />
         </div>
       </div>

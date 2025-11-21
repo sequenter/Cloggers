@@ -9,3 +9,4 @@ export { default as IconButton } from './ui/IconButton';
 export { default as RecentItems } from './ui/RecentItems';
 export { default as ModeIcon } from './ui/ModeIcon';
 export { default as Ranking } from './ui/Ranking';
+export { default as Select } from './ui/Select';

@@ -1,11 +1,10 @@
-import { CollectionItem, IconButton } from '@components';
+import { CollectionItem, Select } from '@components';
 
 import { useCollections } from '@hooks/useCollections';
 
 import { type MainCategories, type SubCategories } from '@types';
 
 import { ITEMS, MAIN_CATEGORIES, SUB_CATEGORIES } from '@utils/constants';
-import { checkIcon, circleIcon, closeIcon } from '@utils/icon';
 
 import { clsx } from 'clsx';
 import { useCallback, useMemo, useState } from 'react';
@@ -76,6 +75,22 @@ const CollectionLog = () => {
     [collectedItems]
   );
 
+  const onFilter = useCallback(
+    /**
+     * On filter select change, filter players by their game mode.
+     */
+    (value: number) => {
+      if (value === 1) {
+        setFilter('collected');
+      } else if (value === 2) {
+        setFilter('notCollected');
+      } else {
+        setFilter('all');
+      }
+    },
+    [setFilter]
+  );
+
   /**
    * On maain category tab pressed, update the selected category and sub category.
    * @param {MainCategories} category Selected category
@@ -92,29 +107,16 @@ const CollectionLog = () => {
           Collection Log - {Object.keys(collectedItems).length}/{Object.keys(ITEMS).length}
         </span>
 
-        <div className="absolute right-2 flex items-center gap-2">
-          <span className="invisible sm:visible">Filter:</span>
-
-          <div className="flex items-center gap-1">
-            <IconButton
-              className={clsx(filter === 'notCollected' ? '' : 'opacity-50 hover:opacity-100')}
-              title="Show uncollected"
-              path={closeIcon}
-              onClick={() => setFilter('notCollected')}
-            />
-            <IconButton
-              className={clsx(filter === 'all' ? '' : 'opacity-50 hover:opacity-100')}
-              title="Show all"
-              path={circleIcon}
-              onClick={() => setFilter('all')}
-            />
-            <IconButton
-              className={clsx(filter === 'collected' ? '' : 'opacity-50 hover:opacity-100')}
-              title="Show collected"
-              path={checkIcon}
-              onClick={() => setFilter('collected')}
-            />
-          </div>
+        <div className="absolute right-2 flex items-center">
+          <Select
+            label="Filter:"
+            options={[
+              { name: 'All', value: -1 },
+              { name: 'Collected', value: 1 },
+              { name: 'Not Collected', value: 2 }
+            ]}
+            onChange={onFilter}
+          />
         </div>
       </div>
 

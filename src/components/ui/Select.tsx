@@ -10,15 +10,11 @@ const Select = ({ label, options, onChange }: Props) => {
   };
 
   return (
-    <form className="">
+    <form>
       <ol>
         <li>
-          <label
-            htmlFor="select"
-            className=""
-          >
-            {label}
-          </label>
+          <label htmlFor="select">{label}</label>
+
           <select
             id="select"
             className="w-36 ms-2 rounded-l-sm px-2 py-1 text-shadow-runescape focus:outline-none border-2 border-grey-50 bg-primary-300"

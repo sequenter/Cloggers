@@ -18,11 +18,12 @@ const Select = ({ label, options, onChange }: Props) => {
           <select
             id="select"
             className="w-36 ms-2 rounded-l-sm px-2 py-1 text-shadow-runescape focus:outline-none border-2 border-grey-50 bg-primary-300"
+            value={options[0].value}
             onChange={handleChange}
           >
-            {options.map(({ name, value }, i) => (
+            {options.map(({ name, value }) => (
               <option
-                selected={i === 0}
+                key={value}
                 value={value}
               >
                 {name}

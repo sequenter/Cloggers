@@ -54,7 +54,7 @@ export const CollectionsProvider = ({ children }: Props) => {
               } else {
                 itemRecord[item] = {
                   item,
-                  name: ITEMS[item],
+                  name: ITEMS[item] ?? '???',
                   playersCollected: [player_name_with_capitalization],
                   playersNotCollected: []
                 };

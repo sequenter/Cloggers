@@ -1,4 +1,4 @@
-import { ModeIcon } from '@components';
+import { ModeIcon, SpriteIcon } from '@components';
 import { Dialog } from '@components/dialog/Dialog';
 
 import { useGroup } from '@hooks/useGroup';
@@ -15,8 +15,13 @@ export const ItemDialog = ({ item, name, playersCollected, playersNotCollected }
 
   return (
     <Dialog
-      title={name}
-      icon={<div className={`sprite-icon id_${item}`}></div>}
+      title={name === '???' ? item : name}
+      icon={
+        <SpriteIcon
+          item={item}
+          name={name}
+        />
+      }
     >
       {playersCollected.length > 0 ? (
         <div className="flex flex-col w-full overflow-auto">

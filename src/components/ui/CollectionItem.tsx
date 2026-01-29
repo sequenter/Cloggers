@@ -1,3 +1,5 @@
+import SpriteIcon from './SpriteIcon';
+
 import { ItemDialog } from '@components/dialog/ItemDialog';
 
 import { useDialog } from '@hooks/useDialog';
@@ -43,7 +45,11 @@ const CollectionItem = ({
         <span className="absolute text-lg z-10 top-0 left-0 text-shadow-runescape text-yellow">{playersCollected.length}</span>
       )}
 
-      <div className={clsx(`sprite-icon id_${item}`, scale, playersCollected.length === 0 && 'opacity-50')}></div>
+      <SpriteIcon
+        className={clsx(scale, playersCollected.length === 0 && 'opacity-50')}
+        item={item}
+        name={name}
+      />
     </button>
   );
 };

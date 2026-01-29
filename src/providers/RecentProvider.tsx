@@ -29,7 +29,7 @@ export const RecentProvider = ({ children }: Props) => {
             ({ date_unix, player, player_name_with_capitalization }) =>
               date_unix >= getUnixDateSubtract(1) && isSelectedPlayer(player_name_with_capitalization ?? player)
           )
-          .map(({ id, ...rest }) => ({ ...collectedItems[id], ...rest }));
+          .map(({ id, ...rest }) => ({ ...rest, ...collectedItems[id] }));
       }
 
       return [];

@@ -1,5 +1,5 @@
 .sprite-icon {
-  background: transparent url('./col_log_icons_sprite_sailing_v2.png') 0 0 no-repeat scroll;
+  background: transparent url('./col_log_icons_sprite_sailing_v2.png') center center no-repeat scroll;
   display: inline-block;
   height: 36px;
   width: 36px;

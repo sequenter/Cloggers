@@ -7,7 +7,7 @@ interface Props {
 }
 
 const SpriteIcon = ({ className, item, name }: Props) => {
-  return <div className={clsx(`sprite-icon id_${item}`, name === '???' && '!bg-[url(assets/icon/missing.png)]', className)}></div>;
+  return <div className={clsx(`sprite-icon`, name === '???' ? '!bg-[url(assets/icon/missing.png)]' : `id_${item}`, className)}></div>;
 };
 
 export default SpriteIcon;

@@ -13,7 +13,7 @@ Cloggers utilises [TempleOSRS APIs](https://templeosrs.com/api_doc.php) to colla
 - Unique collection items achieved by group members
 - Recently collected items within the last month (max 200)
 
-To be able to utilise this tool, OSRS players will need to install the [TempleOSRS plugin](https://runelite.net/plugin-hub/show/temple-osrs) and sync their collection logs in-game. Oonce synced, members will need to be a part of a [TempleOSRS group](https://templeosrs.com/groups/view_groups.php). Then, simply search for the group ID to view group collection log stats.
+To be able to utilise this tool, OSRS players will need to install the [TempleOSRS plugin](https://runelite.net/plugin-hub/show/temple-osrs) and sync their collection logs in-game. Once synced, members will need to be a part of a [TempleOSRS group](https://templeosrs.com/groups/view_groups.php). Then, simply search for the group ID to view group collection log stats.
 
 A **huge** thank you to the TempleOSRS team for making fun little projects like this possible!
 

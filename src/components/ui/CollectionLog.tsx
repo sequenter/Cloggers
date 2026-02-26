@@ -9,12 +9,10 @@ import { ITEMS, MAIN_CATEGORIES, SUB_CATEGORIES } from '@utils/constants';
 import { clsx } from 'clsx';
 import { useCallback, useMemo, useState } from 'react';
 
-type Filter = 'collected' | 'all' | 'notCollected';
-
 const COLLECTION_LOG_TABS = Object.keys(MAIN_CATEGORIES) as Array<MainCategories>;
 
 const CollectionLog = () => {
-  const [filter, setFilter] = useState<Filter>('all');
+  const [filter, setFilter] = useState(-1);
   const [selectedTab, setSelectedTab] = useState<MainCategories>(COLLECTION_LOG_TABS[0]);
   const [selectedCategory, setSelectedCategory] = useState<SubCategories>(MAIN_CATEGORIES[selectedTab][0]);
 
@@ -42,10 +40,10 @@ const CollectionLog = () => {
      * Filter category items by players collected determined by the currently active filter.
      */
     () =>
-      filter === 'all'
+      filter === -1
         ? categoryItems
         : categoryItems.filter((categoryItem) =>
-            filter === 'collected' ? categoryItem.playersCollected.length > 0 : categoryItem.playersCollected.length === 0
+            filter === 1 ? categoryItem.playersCollected.length > 0 : categoryItem.playersCollected.length === 0
           ),
     [categoryItems, filter]
   );
@@ -75,22 +73,6 @@ const CollectionLog = () => {
     [collectedItems]
   );
 
-  const onFilter = useCallback(
-    /**
-     * On filter select change, filter players by their game mode.
-     */
-    (value: number) => {
-      if (value === 1) {
-        setFilter('collected');
-      } else if (value === 2) {
-        setFilter('notCollected');
-      } else {
-        setFilter('all');
-      }
-    },
-    [setFilter]
-  );
-
   /**
    * On maain category tab pressed, update the selected category and sub category.
    * @param {MainCategories} category Selected category
@@ -115,7 +97,8 @@ const CollectionLog = () => {
               { name: 'Collected', value: 1 },
               { name: 'Not Collected', value: 2 }
             ]}
-            onChange={onFilter}
+            value={filter}
+            onChange={setFilter}
           />
         </div>
       </div>

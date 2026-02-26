@@ -4,9 +4,11 @@ import { useGroup } from '@hooks/useGroup';
 import { useSearch } from '@hooks/useSearch';
 
 import { clsx } from 'clsx';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 const Ranking = () => {
+  const [filter, setFilter] = useState(-1);
+
   const { selectedPlayers, resetSelectedPlayers, setSelectedPlayers, toggleSelectedPlayer } = useSearch();
   const { players } = useGroup();
 
@@ -32,6 +34,8 @@ const Ranking = () => {
       } else {
         setSelectedPlayers(rankings.filter(({ gameMode }) => gameMode === value).map(({ name }) => name));
       }
+
+      setFilter(value);
     },
     [rankings, resetSelectedPlayers, setSelectedPlayers]
   );
@@ -51,6 +55,7 @@ const Ranking = () => {
               { name: 'Hardcore Ironman', value: 3 },
               { name: 'Ultimate Ironman', value: 2 }
             ]}
+            value={filter}
             onChange={onFilter}
           />
         </div>

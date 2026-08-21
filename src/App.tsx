@@ -5,25 +5,11 @@ import { CollectionLog, Featured, Footer, Header, Ranking, RecentItems } from '@
 import { useCollections } from '@hooks/useCollections';
 import { useGroup } from '@hooks/useGroup';
 import { useRecent } from '@hooks/useRecent';
-import { useSearch } from '@hooks/useSearch';
-
-import { useEffect } from 'react';
 
 function App() {
-  const { setGroupId } = useSearch();
   const { isLoading: collectionsLoading } = useCollections();
   const { isLoading: groupLoading } = useGroup();
   const { isLoading: recentLoading } = useRecent();
-
-  useEffect(() => {
-    const queryString = window.location.search;
-    const params = new URLSearchParams(queryString);
-    const group = params.get('group');
-
-    if (group) {
-      setGroupId(group);
-    }
-  }, [setGroupId]);
 
   return (
     <>

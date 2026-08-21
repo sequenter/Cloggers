@@ -9,30 +9,26 @@ import { useSearch } from '@hooks/useSearch';
 import { isObjectEmpty } from '@utils/common';
 import { collectionsIcon, gnomeIcon, searchIcon, spinnerIcon } from '@utils/icon';
 
-import { type FormEvent, useEffect, useState } from 'react';
+import { type SubmitEvent, useState } from 'react';
 
 const Header = () => {
-  const [searchGroupId, setSearchGroupId] = useState('');
-
   const { data, error, isLoading } = useCollections();
   const { open } = useDialog();
   const { players } = useGroup();
   const { groupId, resetSelectedPlayers, setGroupId } = useSearch();
 
+  const [searchGroupId, setSearchGroupId] = useState(groupId);
+
   /**
    * On group search.
-   * @param {FormEvent | MouseEvent} e Form submit or button press event
+   * @param {SubmitEvent} e Form submit or button press event
    */
-  const onSearch = (e: FormEvent | MouseEvent) => {
+  const onSearch = (e: SubmitEvent) => {
     e.preventDefault();
 
     resetSelectedPlayers();
     setGroupId(searchGroupId);
   };
-
-  useEffect(() => {
-    setSearchGroupId(groupId);
-  }, [groupId]);
 
   return (
     <div className="pb-2 border-b-2 border-black bg-grey-100">
@@ -52,7 +48,7 @@ const Header = () => {
             <div className="flex items-center gap-2 whitespace-nowrap">
               <form
                 className="flex items-center rounded-l-sm px-2 border-2 border-grey-50 bg-primary-300"
-                onSubmit={() => setGroupId(searchGroupId)}
+                onSubmit={onSearch}
               >
                 <input
                   autoComplete="off"
@@ -71,8 +67,8 @@ const Header = () => {
                   />
                 ) : (
                   <button
+                    type="submit"
                     aria-label="Search"
-                    onClick={onSearch}
                   >
                     <Icon
                       className="w-4 h-4"

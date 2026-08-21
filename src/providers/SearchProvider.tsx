@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const SearchProvider = ({ children }: Props) => {
-  const [groupId, setGroupId] = useState('');
+  const [groupId, setGroupId] = useState(() => new URLSearchParams(window.location.search).get('group') ?? '');
   const [selectedPlayers, setSelectedPlayers] = useState<Array<string>>([]);
 
   const isSelectedPlayer = useCallback(

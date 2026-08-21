@@ -84,12 +84,12 @@ const CollectionLog = () => {
 
   return (
     <div className="flex flex-col gap-2 p-2 border-2 border-black bg-grey-100">
-      <div className="relative flex justify-center py-2 border-2 border-grey-50 bg-primary-100">
+      <div className="relative flex flex-col items-center justify-center p-2 border-2 border-grey-50 bg-primary-100">
         <span className="font-bold text-2xl">
           Collection Log - {Object.keys(collectedItems).length}/{Object.keys(ITEMS).length}
         </span>
 
-        <div className="absolute right-2 flex items-center">
+        <div className="flex items-center md:absolute md:right-2 md:top-1/2 md:-translate-y-1/2">
           <Select
             label="Filter:"
             options={[
